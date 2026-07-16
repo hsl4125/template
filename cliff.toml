@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file. See [conven
 # https://keats.github.io/tera/docs/#introduction
 body = """
 ---
+{% raw %}
 {% if version %}\
     {% if previous.version %}\
         ## [{{ version | trim_start_matches(pat="v") }}]($REPO/compare/{{ previous.version }}..{{ version }}) - {{ timestamp | date(format="%Y-%m-%d") }}
@@ -28,7 +29,7 @@ body = """
         - **({{commit.scope}})**{% if commit.breaking %} [**breaking**]{% endif %} \
             {{ commit.message|trim }} - ([{{ commit.id | truncate(length=7, end="") }}]($REPO/commit/{{ commit.id }})) - {{ commit.author.name }}
     {%- endfor -%}
-    {% raw %}\n{% endraw %}\
+    \n\
     {%- for commit in commits %}
         {%- if commit.scope -%}
         {% else -%}
@@ -37,6 +38,7 @@ body = """
         {% endif -%}
     {% endfor -%}
 {% endfor %}\n
+{% endraw %}
 """
 # template for the changelog footer
 footer = """
